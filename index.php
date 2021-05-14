@@ -1,2 +1,2 @@
 <?php
-require_once "viu.php";
+require_once "view/view.php";
