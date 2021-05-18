@@ -10,23 +10,27 @@
 
         function __construct ($Servidor, $Usuario, $Senha, $BaseDados) 
         {
-            $this -> $Conexao = NULL;
-            $this -> Servidor = $Servidor;
-            $this -> Usuario = $Usuario;
-            $this -> Senha = $Senha;
-            $this -> BaseDados = $BaseDados;
-            $this -> $NumeroErro = -1;
+            $this ->Conexao = NULL;
+            $this ->Servidor = $Servidor;
+            $this ->Usuario = $Usuario;
+            $this ->Senha = $Senha;
+            $this ->BaseDados = $BaseDados;
+            $this ->NumeroErro = -1;
 
         }
 
         public function AbrirConexao() 
         {
-            $this-> Conexao = new mysqli($this-> Servidor, $this-> Usuario, $this-> Senha, $this-> BaseDados);
-            if (mysqli_connect_errno() != 0) {
-                $this-> Conexao = NULL;
-                $this-> NumeroErro = mysqli_connect_errno();
+            $this->Conexao = new mysqli($this->Servidor, $this->Usuario, $this->Senha, $this->BaseDados);
+            
+            if (mysqli_connect_errno() !== 0) {
+                $this->Conexao = NULL;
+                $this->NumeroErro = mysqli_connect_errno();
+                
             }
+            
             return $this->Conexao;
+            
         }
 
         public function FecharConexao() 
@@ -49,24 +53,41 @@
         public function LerTabela($ListaCampos = "*", $NomeTabela = "", $Condicao = "", $Ordenacao = "") 
         {
             if ($NomeTabela != "") {
-                $ComandoSQL = "SELECT" . $ListaCampos . "FROM" . $NomeTabela;
+                $ComandoSQL = "SELECT " . $ListaCampos . " FROM " . $NomeTabela;
                
                 if ($Condicao != "") {
-                    $ComandoSQL .= "WHERE" . $Condicao;
+                    $ComandoSQL .= " WHERE " . $Condicao;
                 }
-                IF ($Ordenacao != "") {
-                    $ComandoSQL .= "ORDER BY" . $Ordenacao;
+                if ($Ordenacao != "") {
+                    $ComandoSQL .= " ORDER BY " . $Ordenacao;
                 }
                 $this->RegistrosLidos = $this->Conexao->query($ComandoSQL);
+              
+                return $this->RegistrosLidos;
             }
             else {
                 return NULL;
             }
         }
 
-        public function Adicionar() 
+        public function AdicionarVeiculo($Marca, $Modelo, $Placa, $Tipo, $Cor, $Ano, $Combustivel, $Diaria) 
         {
+            $DataInclusao = date("Y/m/d");
 
+            $ComandoSQL = 'INSERT INTO veiculo(Codigo_Marca, Codigo_Modelo, Placa, Codigo_Tipo, 
+            Codigo_Cor, Ano_Modelo, Compustivel, Data_inclusao, valor_Diaria)'.
+                
+                'VALUES ('.$Marca.','.$Modelo.',"'.$Placa.'",'.$Tipo.','.$Cor.','.$Ano.','.$Combustivel.',
+                "'.$DataInclusao.'",'.$Diaria.')';
+
+                $Resultado = $this->Conexao->query($ComandoSQL);
+
+                if (($Resultado == FALSE) || ($this->Conexao->affected_rows != 1)) {
+                    return FALSE;
+                } else {
+                    return TRUE;
+                }
+            
         }
 
 
