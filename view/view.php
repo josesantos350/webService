@@ -12,6 +12,7 @@
      <?php       
       require_once "bd/banco_dados.php";
       require_once "bd/configuracao.php";
+      require_once "lista_dados.php";
 
       $ConexaoBaseDados = new BancoDados($Servidor, $Usuario, $Senha, $BaseDados);
 
@@ -36,7 +37,7 @@
       }
       
       $ConexaoBaseDados->FecharConexao();
-      echo time();
+      
       ?>
             <div class="container">
             </div>
