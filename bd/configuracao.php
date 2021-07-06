@@ -1,5 +1,5 @@
 <?php
 $Servidor = "localhost";
 $Usuario = "root";
-$Senha = 123456;
+$Senha = "";
 $BaseDados = "db_locadora";

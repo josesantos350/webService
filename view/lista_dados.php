@@ -2,7 +2,7 @@
 require_once "bd/banco_dados.php";
 require_once "bd/configuracao.php";
 
-$Tabela = $_REQUEST["tabela"];
+$Tabela = "";
 $Retorno = "";
 $Ordenacao = "";
 
@@ -15,6 +15,9 @@ else {
     if ($Tabela == "veiculo") {
         $Campos = "Descricao_Marca, Descricao_Modelo, Descricao_Tipo";
         
+    }
+    if ($Tabela == "marca") {
+        $Ordenacao = "Descricao_marca";
     }
 
 }
